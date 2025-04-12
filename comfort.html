@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comfort Cards</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>COMFORT CARDS</h1>
+    <div class="card">
+      <div id="card-content"></div>
+    </div>
+    <button id="action-button">SHUFFLE</button>
+    <footer>
+      <p>copy©2024 Kai All rights reserved</p>
+    </footer>
+  </div>
+  <style>
+    /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+  }
+  
+  .container {
+    text-align: center;
+  }
+  
+  h1 {
+    color: #f7b692;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    width: 300px;
+    height: 300px;
+    background-color: #f7b692;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  #card-content {
+    color: white;
+    font-size: 1.2em;
+    text-align: center;
+  }
+  
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #f7b692;
+    color: white;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #f6a471;
+  }
+  
+  footer {
+    width: 2000px;
+    height: 20px;
+    background-color: #f6a471;
+    margin-top: 250px;
+    font-size: 0.8em;
+    color: #ffffff;
+  }
+  
+  </style>
+  <script>
+    // Array of questions (Taglish) and quotes (English)
+const questionsAndQuotes = [
+    {
+      question: "Ano ang pinaka masakit na bagay na narealize mo sa friendship?",
+      quote: "Maintaining a friendship takes effort, but it’s the little act of kindness and communication that keep the bond strong.",
+    },
+    {
+      question: "Ano ang ginagawa mo kapag sobrang lungkot ka?",
+      quote: "Sadness is temporary, but taking time to reflect and care for yourself creates lasting strength.",
+    },
+    {
+      question: "Ano ang pinaka valueable na natutunan mo about mental health recently?",
+      quote: "Your mind deserves rest as much as your body does—healing begins when you allow yourself to slow down.",
+    },
+    {
+        question: "If you can go back in time to correct a mistake, ano yun?",
+        quote: "Your past mistakes don’t define you—they guide you to grow and become stronger.",
+    },
+    {
+        question: "Ano ang huling bagay na nagpaiyak sa'yo, at bakit",
+        quote: "Tears don’t mean you’re weak; they mean you’re feeling what needs to be felt to heal.",
+    },
+    {
+        question: "Pinatawad mo na ba ang sarili mo? Paano?",
+        quote: "Forgiving yourself is a gift you give your heart—it’s how you let go and move forward.",
+    },
+    {
+        question: "Ano o sino ang iyong pahinga?",
+        quote: "Rest isn’t just a place—it’s a person, a moment, or a feeling of being safe and loved.",
+    },
+    {
+        question: "Kung may gusto kang pasalamatan ngayon, sino s'ya at bakit?",
+        quote: "Gratitude opens your heart to the beauty of life—don’t forget to thank yourself too.",
+    },
+    {
+        question: "Ano ang pinaka mahirap na bagay na kinailangan mo ng tanggapin sa sarili mo?",
+        quote: "Acceptance isn’t easy, but it’s the first step toward inner peace and freedom.",
+    },
+    {
+        question: "Nagpanggap ka na bang masaya kahit hindi ka okay? Paano mo ito hinarap?",
+        quote: "You don’t always have to pretend—you deserve to be seen, heard, and understood.",
+    },
+    {
+        question: "If you were given a chance to talk with your younger self, anong sasabihin mo sa kan'ya?",
+        quote: "You are stronger than you think, and the things that scare you today will make you proud tomorrow.",
+    },
+    {
+        question: "Ano ang pinaka mabigat na bagay na tiniis mo mag-isa? Paano mo ito nalampasan?",
+        quote: "Even in your loneliest battles, you proved you could carry the weight and rise again.",
+    },
+    {
+        question: "Naranasan mo na bang kailangan mo ng tulong pero wala kang malapitan or takot kang humingi ng tulong? Paano mo ito nalampasan?",
+        quote: "Sometimes the hardest step is asking, but never forget, there are hearts willing to listen.",
+    },
+    {
+        question: "Ano ang pinaka masakit na sinabi sa'yo from someone you love?",
+        quote: "Words can wound, but they don’t have to break you—your worth is greater than any hurt.",
+    },
+    {
+        question: "May oras ba na mas pinipili mong manahimik kaysa mag open up? Bakit?",
+        quote: "Silence can be healing, but remember, opening up can be the bridge to understanding.",
+    },
+    {
+        question: "What makes you want to continue?",
+        quote: "Every new day is a chance to rewrite your story—there’s beauty in simply trying.",
+    },
+    {
+        question: "Saan ka humuhugot ng lakas kapag nahihirapan ka?",
+        quote: "Strength comes from the smallest places—your faith, your dreams, and those who love you.",
+    },
+    {
+        question: "Ano ang isang life lesson na natutunan mo this year na hindi mo inaasahan?",
+        quote: "Life surprises you with lessons in the hardest moments—trust that they lead to growth.",
+    },
+    {
+        question: "Kailan mo huling naramdaman na parang hindi ka naiintindihan ng kahit sino?",
+        quote: "Being misunderstood doesn’t mean you’re alone—it means your voice is still worth sharing.",
+    },
+    {
+        question: "Kailan ka nakaramdam ng pure joy?",
+        quote: "Pure joy often comes in the simplest moments—like when you feel truly free to be yourself.",
+    },
+    {
+        question: "Ano ang huling bagay na ginawa mo na sobrang ipinagmamalaki mo?",
+        quote: "Even small victories deserve to be celebrated—they remind you of your strength and growth.",
+    },
+    {
+        question: "Kung may gusto kang ipagdasal ngayon, ano yun?",
+        quote: "Prayer is your heart’s quiet way of asking for hope and peace—never underestimate its power.",
+    },
+    {
+        question: "Ano ang bagay na nagpapaalala sa'yo na hindi ka nag-iisa?",
+        quote: "Sometimes, the smallest gestures remind you that love and support are always around you.",
+    },
+    {
+        question: "Kailan ka huling nakaramdam ng kapayapaan?",
+        quote: "True peace is found in moments where your heart feels light and your soul feels free.",
+    },
+    {
+        question: "May naitago ka bang bahagi ng sarili mo dahil sa takot na husgahan? Ano yun?",
+        quote: "You deserve to be seen as your whole self—flaws and all, you are still worthy of love.",
+    },
+    {
+        question: "Kung may isa kang bagay na gustong bitawan, ano yun?",
+        quote: "Letting go isn’t easy, but it opens the door to new beginnings and lighter days.",
+    },
+    {
+        question: "Anong pangarap ang gusto mong buuin muli?",
+        quote: "Dreams don’t expire—they wait for you to believe in them again.",
+    },
+    {
+        question: "Kailan mo huling naramdaman na mahalaga ka?",
+        quote: "You are important, even in moments when you forget—your worth is infinite and unchanging.",
+    },
+    {
+        question: "Kung may isang tao na gusto mong yakapin ngayon, sino yun at bakit?",
+        quote: "Sometimes, a hug is the quietest way of saying, ‘I’m here, and I care for you.’",
+    },
+    {
+        question: "Ano ang bagay na nagpapagaan ng loob mo kapag ikaw ay nalulungkot?",
+        quote: "Find comfort in the things that remind you of hope—a song, a memory, or a familiar smile.",
+    },
+    {
+        question: "Kung maaari kang humingi ng tawad sa sarili mo, tungkol saan ito?",
+        quote: "Forgive yourself for the times you didn’t know better—it’s a step toward healing and self-love.",
+    },
+    {
+        question: "Ano ang pinakamagandang payo na narinig mo tungkol sa pag-ibig?",
+        quote: "Love is not perfect, but it’s in its imperfection that you find its truest form.",
+    },
+    {
+        question: "Kung may isa kang bagay na gusto mong ipagpasalamat sa sarili mo, ano yun?",
+        quote: "Thank yourself for continuing to fight, even on the days when it felt impossible.",
+    },
+    {
+        question: "Ano ang bagay na pinakakinatatakutan mo ngayon?",
+        quote: "Fear doesn’t define you—it’s a reminder of your courage to face the unknown.",
+    },
+    {
+        question: "Anong memory ang nagbibigay sa'yo ng lakas kapag ikaw ay nanghihina?",
+        quote: "Memories of love, laughter, and triumph carry the strength you need to move forward.",
+    },
+    {
+        question: "Kailan mo huling naramdaman na buo ang tiwala mo sa sarili mo?",
+        quote: "Confidence is not about never doubting—it’s about choosing to trust yourself despite the doubts.",
+    },
+    {
+        question: "Kung maaari kang magbigay ng payo sa taong nawawalan ng pag-asa, ano yun?",
+        quote: "Even the darkest nights end with a sunrise—keep going, you are closer than you think.",
+    },
+    {
+        question: "Ano ang bagay na nagpapatahimik ng isip mo kapag puno ka ng alalahanin?",
+        quote: "Peace comes from the things that remind you to breathe, pause, and trust the process.",
+    },
+    {
+        question: "Kung may isa kang bagay na gusto mong matutunan sa buhay, ano yun?",
+        quote: "Life is a journey of lessons—there’s no deadline for learning and growing at your own pace.",
+    },
+    {
+        question: "Ano ang bagay na pinaka nagpapakilig sa'yo kahit simpleng bagay lang?",
+        quote: "Happiness lives in the smallest, unexpected moments—like the warmth of a kind word or a gentle smile.",
+    },
+    
+    // Add up to 200 questions and quotes here
+  ];
+  
+  // DOM Elements
+  const card = document.querySelector(".card");
+  const cardContent = document.getElementById("card-content");
+  const actionButton = document.getElementById("action-button");
+  
+  let isQuestion = true; // Tracks whether the card shows a question
+  let currentIndex = 0; // Index of the current question/quote
+  
+  // Initialize the card
+  function initialize() {
+    cardContent.textContent = "";
+    actionButton.textContent = "SHUFFLE";
+    card.style.backgroundColor = "#f7b692";
+    cardContent.style.color = "white";
+    isQuestion = true;
+    
+  }
+  
+  
+  // Display a random question
+  function showQuestion() {
+    currentIndex = Math.floor(Math.random() * questionsAndQuotes.length);
+    cardContent.textContent = questionsAndQuotes[currentIndex].question;
+    actionButton.textContent = "FLIP";
+    card.style.backgroundColor = "#f7b692";
+    cardContent.style.color = "white";
+    isQuestion = false;
+  }
+  
+  // Display the corresponding quote
+  function showQuote() {
+    cardContent.textContent = questionsAndQuotes[currentIndex].quote;
+    card.style.backgroundColor = "white";
+    cardContent.style.color = "#f7b692";
+    actionButton.textContent = "SHUFFLE";
+    isQuestion = true;
+  }
+  
+  // Event listener for the button
+  actionButton.addEventListener("click", () => {
+    if (isQuestion) {
+      showQuestion();
+    } else {
+      showQuote();
+    }
+  });
+  
+  // Initialize the card on page load
+  initialize();
+  
+  </script>
+</body>
+</html>
